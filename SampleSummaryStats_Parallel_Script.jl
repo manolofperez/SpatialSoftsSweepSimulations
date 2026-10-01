@@ -31,8 +31,8 @@ if Species=="AGambiae"
 
     #Priors used for Anopheles Gambiae
     Nminmax = [1e7,5e9] #if μ=2e-9 then Nμ = [0.02 to 200]
-    sminmax = [1e-2,1.0]
-    Dminmax = [5.0,1000.0]
+    sminmax = [2e-2,2.0]
+    Dminmax = [2.5,500.0]
     Tminmax = [1940.0, 2000.0] #calendar years
 
     #Anopheles mutation rate: Rashid et al, 202x Sci Reps.
@@ -52,7 +52,7 @@ elseif Species=="Human"
     #Priors used for humans in Africa for LCT locus
     Nminmax = [5e4,5e7] #if μ=2e-9 then Nμ = [0.02 to 200]
     sminmax = [1e-3,1.0]
-    Dminmax = [100.0,40000.0]
+    Dminmax = [50.0,20000.0]
     Tminmax = [-13000.0, -3000.0] #calendar years
 
     #Human mutation rate per base-pair per generation

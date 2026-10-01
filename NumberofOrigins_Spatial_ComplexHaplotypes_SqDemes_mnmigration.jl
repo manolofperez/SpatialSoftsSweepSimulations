@@ -530,7 +530,7 @@ function NumberOfOrigins_Spatial(N::Real, Area::Real, theta::Real, s::Real, D::R
 
                     if 0 < xwt < 1 #then Ki must include the WT
                         # ss = xwt * s
-                        ss = xwt * s * (hdom .+ (1 - 2*hdom)*Xi)
+                        ss = xwt * s * (hdom .+ (1 - 2*hdom)*(1-xwt))
                         
                         xx = @. Xi + ss * Xi #Each de novo mutant is given a selection advantage — for xwt=0 ss=0 and the mean frequency doesn't change
 
