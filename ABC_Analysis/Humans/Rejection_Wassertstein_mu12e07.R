@@ -4,14 +4,13 @@ library(R.matlab)
 library(T4transport)
 library(transport)
 library(ptw)
-library(abcWasserstein)
 library(abc)
 library(future.apply)
 plan(multisession)  # or multiprocess on older R
 library(rhdf5)
 
 # Load the data
-data <- readMat('narray_Area=LCT_AfricaRange_mu=1.2e-07_M=5000_updatedpriors.mat')
+data <- readMat('narray_Area=LCT_HumanRange_mu=1.2e-07_M=5000.mat')
 
 # Subset only the summary statistics.
 sust <- lapply(data[["n"]], function(x) x[[1]])
@@ -41,11 +40,7 @@ colnames(parameters)<-c("N","s","D","t")
     orig_param4 = NA_real_,
     median_param4 = NA_real_,
     ci_low_param4 = NA_real_,
-    ci_high_param4 = NA_real_,
-    orig_param5 = NA_real_,
-    median_param5 = NA_real_,
-    ci_low_param5 = NA_real_,
-    ci_high_param5 = NA_real_
+    ci_high_param4 = NA_real_
   )
 
   # Define a function to pad smaller matrices on the reight side, so that the Wasserstein distance can be computed.
@@ -77,7 +72,7 @@ for (p in 1:500) {
       param = parameters[-p, ], 
       sumstat = dist[-p], 
       tol = 0.005,
-      transf=c("none","none","none","none","none"), 
+      transf=c("none","none","none","none"), 
       method = "rejection"
     )
 
@@ -108,16 +103,11 @@ for (p in 1:500) {
     results$ci_low_param4[i] <- ci_vals[1, 4]
     results$ci_high_param4[i] <- ci_vals[2, 4]
     
-    results$orig_param5[i] <- orig_vals[[5]]
-    results$median_param5[i] <- median(post.parest$unadj.values[,5])
-    results$ci_low_param5[i] <- ci_vals[1, 5]
-    results$ci_high_param5[i] <- ci_vals[2, 5]
-    
     i <- i+1
     
   }
 # Save to output file.
-write.csv(results,paste("Wasserstein_CI_results_mu=1.2e-07_uptdatedpriors.csv",sep=""))
+write.csv(results,paste("Wasserstein_CI_results_mu=1.2e-07.csv",sep=""))
 
 # Load the vector of empirical summary statistics.
 emp <- h5read('LCT_SummaryStats_AfricaRange.mat', "ndata")
@@ -140,6 +130,6 @@ dist <- future_sapply(sust, function(su, tgt)
 summary(post.parest)
 
 # Save the parameter estimatess.
-write.csv(post.parest$unadj.values,paste("Wasserstein_posterior_results_mu=1.2e-07_uptdatedpriors.csv",sep=""))
+write.csv(post.parest$unadj.values,paste("Wasserstein_posterior_results_mu=1.2e-07.csv",sep=""))
   
 
