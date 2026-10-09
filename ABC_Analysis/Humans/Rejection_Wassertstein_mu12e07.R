@@ -122,7 +122,7 @@ dist <- future_sapply(sust, function(su, tgt)
     param = parameters, 
     sumstat = dist, 
     tol = 0.005,
-    transf=c("none","none","none","none","none"), 
+    transf=c("none","none","none","none"), 
     method = "rejection"
   )
   
